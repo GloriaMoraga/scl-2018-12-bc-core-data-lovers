@@ -11,7 +11,8 @@ const fetchData = () =>  {
            pokeData = data.pokemon;
            
                
-                
+          })
+        }              
 
 window.poke = {
 
@@ -222,7 +223,7 @@ window.poke = {
     },
   
   
-    completeData:(pokeData) => {
+    completeData:() => {
      const theData = pokeData;
      let completeName;
     //  console.log(theData)
@@ -244,8 +245,7 @@ window.poke = {
   };
 
 
-})
-}
+
 window.onload = fetchData;
 window.processData;
 window.showDatafilter;

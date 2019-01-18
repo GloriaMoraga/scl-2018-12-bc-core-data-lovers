@@ -85,7 +85,7 @@ let datalist = document.getElementById('names'); // variable para mostrar en dat
 
 document.getElementById('search').addEventListener('keyup', function () {
   let searchComplete = document.getElementById('search').value;
-  let resultNameComplete = window.poke.completeData(pokeData);
+  let resultNameComplete = window.poke.completeData();
     console.log(resultNameComplete)
     if (searchComplete.length === 0) { // si el input search es igual a 0 lo devuelve.
         return;

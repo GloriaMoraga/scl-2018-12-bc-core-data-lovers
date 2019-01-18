@@ -1,12 +1,14 @@
 
-window.onload = (() => {// Buscar con click del botón y Mostrar
+  
+
+// window.onload = () => {// Buscar con click del botón y Mostrar
 document.getElementById('btnSearch').addEventListener('click',
     (evento) => {evento.preventDefault();    // Funcion al clickear boton
 
 document.getElementById('root').innerHTML = '';   // cada vez limpia el div donde se muestra el resultado.
 let textSearch = document.getElementById('search').value;  // variable de input buscar
-let resultado = window.poke.processData(textSearch);  // llamando el resultado desde Data.js
-
+let resultado = window.poke.processData(pokeData, textSearch);  // llamando el resultado desde Data.js
+// console.log(resultado)
 document.getElementById('root').innerHTML += 
 `<div class="container">
 <div class="columns">
@@ -16,20 +18,22 @@ document.getElementById('root').innerHTML +=
 <div class ="backgroundColor">
 <div class="card-content">
   <div class="media-content">
-      <p class="title is-4 has-text-white">${resultado[0]}</p>
+      <p class="title is-4 has-text-white">${resultado.name}</p>
   </div>
 </div>
 </div>
 <div class="card-content is-flex is-horizontal-center">
   <figure class="image is-128x128">
-      <img class="backgroundImage is-rounded" src="${resultado[1]}">
+      <img class="backgroundImage is-rounded" src="${resultado.img}">
   </figure>
   </div>
   <div class="card-content is-horizontal-center">
   <div class="control">
     <div class="tags has-addons">
      
-      <span class="tag is-primary">${resultado[3]}</span>
+      <span class="tag is-primary">${resultado.type[0]}</span>
+      <span class="tag is-primary">${resultado.type[1]}</span>
+      
       
     </div>
   </div>
@@ -46,10 +50,10 @@ document.getElementById('root').innerHTML +=
       <p>Peso</p>
         </div>
         <div class="column">
-      <p> ${resultado[4]}</p>
-      <p> ${resultado[5]}</p>
-      <p> ${resultado[2]}</p>
-      <p> ${resultado[6]}</p>
+      <p> ${resultado.candy}</p>
+      <p> ${resultado.egg}</p>
+      <p> ${resultado.weaknesses}</p>
+      <p> ${resultado.weight}</p>
         </div>
     </div>
   
@@ -76,23 +80,27 @@ document.getElementById("search").value = "";// limpia el input
 
 // Autocompletar desde Data con datalist
 
-let resultadoNombres = window.poke.completeData(); // llamando propiedad nombre desde data.js
+ // llamando propiedad nombre desde data.js
 let datalist = document.getElementById('names'); // variable para mostrar en datalist
 
 document.getElementById('search').addEventListener('keyup', function () {
   let searchComplete = document.getElementById('search').value;
+  let resultNameComplete = window.poke.completeData(pokeData);
+    console.log(resultNameComplete)
     if (searchComplete.length === 0) { // si el input search es igual a 0 lo devuelve.
         return;
     }
     datalist.textContent = ''; // limpia la busqueda por letra.
     // recorre la data  la muestra en el search
-    for (let i = 0; i < resultadoNombres.length; i++) {
-        if (resultadoNombres[i].toLowerCase().indexOf(searchComplete.toLowerCase()) !== 0) {
+  
+    for (let i = 0; i < resultNameComplete.length; i++) {
+
+        if (resultNameComplete.toLowerCase().indexOf(searchComplete.toLowerCase()) !== 0) {
             continue;
             
         }
         let option = document.createElement('option');
-        option.value = resultadoNombres[i];
+        option.value = resultNameComplete;
         datalist.appendChild(option); // muestra la lista de datos en datalist
         
     }
@@ -102,21 +110,24 @@ document.getElementById('search').addEventListener('keyup', function () {
     
 
  // mostrar todos los pokemones en div
-let resultadoAllPokemons = window.poke.showDatafilter(); 
+
 document.getElementById('allPokemons').innerHTML = ''; // limpio el div cada vez que se hace click
- for (let i = 0; i < resultadoAllPokemons.length; i++) {
+
+let resultadoAllPokemons = window.poke.showDatafilter(pokeData); 
+resultadoAllPokemons.forEach(elementall => {
+    console.log(elementall)
     document.getElementById('allPokemons').innerHTML += ` <div class="column is-one-quarter">
     <div class="card gradiantContainer">
   
     <div class="card-content is-flex is-horizontal-center">
       <figure class="image is-128x128">
-          <img class="backgroundImage is-rounded" src="${resultadoAllPokemons[i]}">
+          <img class="backgroundImage is-rounded" src="${elementall.img}">
       </figure>
       </div>
   
       </div>
       </div>` // imprimo en el HTML cada nombre que está dentro de cada posición del arreglo.
-  }
+  })
 
 
 //  ordenar de la A-Z ,Z-A Y 1-151
@@ -125,9 +136,8 @@ document.getElementById("orderPokemon").addEventListener("change", sort => {
 document.getElementById('allPokemons').innerHTML  = '';
 
 let sortOrder = sort.target.value;
-let resultsort = window.poke.sortData(sortOrder); 
-
-
+let resultsort = window.poke.sortData(pokeData, sortOrder); 
+console.log(resultsort)
 resultsort.forEach(elementos => {
     document.getElementById('allPokemons').innerHTML += 
     `
@@ -156,7 +166,7 @@ resultsort.forEach(elementos => {
 document.getElementById("typePokemon").addEventListener("change", choose => {
     let selectedchoose = choose.target.value;
 
-    let resultfilter = window.poke.filterData(selectedchoose); 
+    let resultfilter = window.poke.filterData(pokeData, selectedchoose); 
    
     document.getElementById('allPokemons').innerHTML  = '';
 
@@ -193,7 +203,7 @@ let resultcompute = window.poke.computeStats();
 resultcompute();
 window.resultcompute;
 window.data;
-})
+// })
 
 
 
@@ -223,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
   });
-
 
 
 

@@ -1,31 +1,60 @@
-const data = window.POKEMON.pokemon;
-window.google;
-window.data;
+// const data = window.POKEMON.pokemon;
+// window.google;
+// window.data;
 
+
+
+const fetchData = () =>  {
+    fetch('./data/pokemon/pokemon.json')
+    .then(res => res.json())
+     .then(data => {
+           pokeData = data.pokemon;
+           
+               
+                
 
 window.poke = {
 
+  showDatafilter :(pokeData) => {
+    console.log( pokeData)
+    const theData = pokeData;
+            
+    
+   let showAll;
+  //  console.log(theData)
+   theData.forEach(element =>  {
+    // console.log(element)
+    showAll = element;
+
+    })
+
+   
   
-  processData: (textSearch) => {
+      
+  },
+
   
-  
-  let nombres = []; // arreglo vacío donde pushearé los nombres nuevos.
-  for (let i = 0; i < data.length; i++) {
-  
-    if (data[i].name === textSearch){
-      nombres.push(data[i].name, data[i].img, data[i].weaknesses, data[i].type,data[i].candy,data[i].egg, data[i].weight)
+  processData: (pokeData, textSearch) => {
+// arreglo vacío donde pushearé los nombres nuevos.
+
+  for (let valor of pokeData) {
+    //  console.log(valor.name)
+    if (valor.name === textSearch){
+      return valor;
+      
+    
     }
   }
-    return nombres;
+  
   
     // Mostrar la data en una interfaz: puede ser un card, una tabla, una lista, etc.
   
     },
   
-    filterData:(selectedchoose) => {
-
-  
-      let typePoke = data.filter(elemento => {
+    filterData:(pokeData, selectedchoose) => {
+      console.log( pokeData)
+      const theData = pokeData;
+       let typePoke = theData.filter(elemento => {
         if (elemento.type[0]  === selectedchoose){
           return elemento;
         }
@@ -49,8 +78,9 @@ window.poke = {
   },
   
   
-    sortData:(sortOrder) => {
-      data.sort(function(a, b) {
+    sortData:(pokeData, sortOrder) => {
+      const theData = pokeData;
+      theData.sort(function(a, b) {
       if( sortOrder === "a-z"){
        
         if (a.name < b.name ) {
@@ -89,7 +119,7 @@ window.poke = {
         return 0;
       }
       });
-       return data;
+       return pokeData;
       
   
       
@@ -103,7 +133,7 @@ window.poke = {
     },
   
   
-    computeStats:() => {
+    computeStats:(pokeData) => {
       
 
           const firepokemon = data.filter((element )=> {return element.type.indexOf('Fuego') >= 0 });
@@ -178,7 +208,7 @@ window.poke = {
            ]);
    
            let options = {
-             title: '',
+             title: 'Porcentajes de Pokemon en la Región Kanto',
              pieHole: 0.5,
              
              backgroundColor: 'transparent'
@@ -192,27 +222,31 @@ window.poke = {
     },
   
   
-    completeData:() => {
-
-      let nameComplete = []; // arreglo vacío donde pushearé los nombres nuevos.
-      for (let i = 0; i < data.length; i++) {
-          nameComplete.push(data[i].name)
+    completeData:(pokeData) => {
+     const theData = pokeData;
+     let completeName;
+    //  console.log(theData)
+     theData.forEach(element =>  {
+      // console.log(element)
+    completeName = element.name;
+          
+      // let imgData = []; // arreglo vacío donde pushearé los nombres nuevos.
+      // for (let i = 0; i < data.length; i++) {
+      //  imgData.push(data[i].img)
         
-      }
-        return nameComplete;
-      
-    },
-  
-    showDatafilter:() => {
-      let imgData = []; // arreglo vacío donde pushearé los nombres nuevos.
-      for (let i = 0; i < data.length; i++) {
-       imgData.push(data[i].img)
+      // }
+      // return imgData;  
         
-      }
-      return imgData;
+      })
+      return completeName;
     },
   
   };
 
 
-  
+})
+}
+window.onload = fetchData;
+window.processData;
+window.showDatafilter;
+window.completeData;

@@ -5,7 +5,12 @@ global.expect=require("chai").assert;
 require('../src/data/pokemon/pokemon.js')
 require('../src/data.js');
 
-const data = window.POKEMON.pokemon;
+// let data;
+//  const fetch = fetch('./data/pokemon/pokemon.json')
+//   .then(res => res.json())
+//    .then(pokeData => {
+//     data = pokeData.pokemon;
+//  })
 
 const assert = require("assert"); 
 
@@ -51,7 +56,7 @@ describe('processData', () => {
 
 
   it('debería retornar "Bulbasaur" para "Bulbasaur"', () => {
-    assert.deepEqual(window.poke.processData (data[0].name), '["Bulbasaur", "http://www.serebii.net/pokemongo/pokemon/001.png", ["Fuego", "Hielo", "Volador", "Psíquico"], ["Planta", "Veneno"], "Bulbasaur Candy", "2 km", "6.9 kg"]');
+    assert.deepEqual(window.poke.processData (), '["Bulbasaur", "http://www.serebii.net/pokemongo/pokemon/001.png", ["Fuego", "Hielo", "Volador", "Psíquico"], ["Planta", "Veneno"], "Bulbasaur Candy", "2 km", "6.9 kg"]');
   });
 });
 
@@ -75,7 +80,7 @@ describe('poke.completeData', () => {
   });
 
   it('debería retornar "Bulbasaur" para "Bulbasaur"', () => {
-    assert.equal(window.poke.completeData (data.name), 'Bulbasaur');
+    assert.equal(window.poke.completeData (), 'Bulbasaur');
   });
 });
 
@@ -97,6 +102,6 @@ describe('poke.showDatafilter', () => {
   });
 
   it('debería retornar "Bulbasaur" para "Bulbasaur"', () => {
-    assert.equal(window.poke.showDatafilter (data.img[0]), 'http://www.serebii.net/pokemongo/pokemon/001.png');
+    assert.equal(window.poke.showDatafilter (), 'http://www.serebii.net/pokemongo/pokemon/001.png');
   });
 });

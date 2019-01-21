@@ -1,55 +1,63 @@
-const data = window.POKEMON.pokemon;
-window.google;
-window.data;
-
+let data;
+fetch('./data/pokemon/pokemon.json')
+  .then(res => res.json())
+   .then(pokeData => {
+    data = pokeData.pokemon;
+ })
+        
 
 window.poke = {
 
   
   processData: (textSearch) => {
-  
-  
-  let nombres = []; // arreglo vacío donde pushearé los nombres nuevos.
-  for (let i = 0; i < data.length; i++) {
-  
-    if (data[i].name === textSearch){
-      nombres.push(data[i].name, data[i].img, data[i].weaknesses, data[i].type,data[i].candy,data[i].egg, data[i].weight)
+    
+    for (let valor of data) {
+      //  console.log(valor.name)
+      if (valor.name === textSearch){
+        return valor;
+        
+      
+      }
     }
-  }
-    return nombres;
+  // let nombres = []; // arreglo vacío donde pushearé los nombres nuevos.
+  // for (let i = 0; i < data.length; i++) {
+  
+  //   if (data[i].name === textSearch){
+  //     nombres.push(data[i].name, data[i].img, data[i].weaknesses, data[i].type,data[i].candy,data[i].egg, data[i].weight)
+  //   }
+  // }
+  //   return nombres;
   
     // Mostrar la data en una interfaz: puede ser un card, una tabla, una lista, etc.
   
     },
   
     filterData:(selectedchoose) => {
+ 
+    const typePoke = data.filter(elemento => {
+    
+        if (elemento.type[0] === selectedchoose){
+          return elemento;
+        }
+        if (elemento.type[1] === selectedchoose){
+          return elemento;
+        }
+        if (elemento.type[2] === selectedchoose){
+          return elemento;
+        }
+       
+      
+      
+      
 
-  
-      let typePoke = data.filter(elemento => {
-        if (elemento.type[0]  === selectedchoose){
-          return elemento;
-        }
-        else if  (elemento.type[1]  === selectedchoose){
-          return elemento;
-        }
-         else if (elemento.type[2]  === selectedchoose){
-          return elemento;
-        }
-        
-  
-  
       })
       return typePoke;
-  
-            
-              
-  
-  // esta función filter o filtrar recibiría la data,  y nos retornaría aquellos datos que sí cumplan con la condición.
   
   },
   
   
     sortData:(sortOrder) => {
+     
       data.sort(function(a, b) {
       if( sortOrder === "a-z"){
        
@@ -105,7 +113,8 @@ window.poke = {
   
     computeStats:() => {
       
-
+          
+     
           const firepokemon = data.filter((element )=> {return element.type.indexOf('Fuego') >= 0 });
           let fire = firepokemon.length;
        
@@ -197,8 +206,7 @@ window.poke = {
       let nameComplete = []; // arreglo vacío donde pushearé los nombres nuevos.
       for (let i = 0; i < data.length; i++) {
           nameComplete.push(data[i].name)
-        
-      }
+     }
         return nameComplete;
       
     },
@@ -214,5 +222,5 @@ window.poke = {
   
   };
 
-
-  
+  window.data;
+  window.google;
